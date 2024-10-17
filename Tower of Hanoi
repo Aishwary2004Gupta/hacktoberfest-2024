@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+void moveDisk(char source, char destination, int disk) {
+    cout << "Move disk " << disk << " from " << source << " to " << destination << endl;
+}
+
+int countMoves(int n, char source, char auxiliary, char destination) {
+    int totalMoves;
+
+    if (n == 1) {
+        moveDisk(source, destination, 1);
+        totalMoves = 1;
+    } else {
+        totalMoves = countMoves(n - 1, source, destination, auxiliary) + 1;
+        moveDisk(source, destination, n);
+        totalMoves += countMoves(n - 1, auxiliary, source, destination);
+    }
+
+    return totalMoves;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    char source = 'A';
+    char auxiliary = 'B';
+    char destination = 'C';
+
+    int totalMoves = countMoves(n, source, auxiliary, destination);
+    cout << "Total number of moves: " << totalMoves<<endl;
+
+    return 0;
+}
